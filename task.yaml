@@ -1,0 +1,34 @@
+name: global-sync-migration
+version: 0.2.0
+difficulty: hard
+category: dsa-scheduling
+description: Optimize a multi-region infrastructure migration with resource constraints and implicit rules.
+instructions: |
+  You are lead architect managing the "Global Sync" migration. 
+  The migration involves 40 nodes across 4 regions: `US-East`, `EU-West`, `Asia-South`, and `Global-Core`.
+
+  Input Data:
+  1. `network_map/`: Contains files for each node listing its direct dependencies.
+  2. `node_configs.json`: Contains `duration` (days) and `ru_cost` (Resource Units) for each node.
+  3. `metadata.json`: Maps each node to its `Region` and `Type` (`Database` or `Frontend`).
+
+  Constraints:
+  - **Dependency**: A node can only start if ALL its listed dependencies are COMPLETED.
+  - **Implicit Rule**: Within the SAME region, all `Database` type nodes must be completed before any `Frontend` type node starts.
+  - **Global Resource Cap**: Total RU (Resource Units) from all active migrations cannot exceed **15 RU** on any given day.
+  - **Regional Concurrency**: No more than **2 nodes** in the same region can be migrated simultaneously.
+  - **Weighted Migration**: A node upgrade takes `duration` days and consumes its `ru_cost` units of RU every day it is active.
+
+  Task:
+  - Calculate the **Minimum Total Days** to complete the entire migration.
+  - Calculate the **Weighted Critical Path Sum**: The sum of `duration` values for the longest chain of dependencies (ignoring resource caps, but respecting implicit DB->Frontend rules).
+
+  Output:
+  - Create `result.json` with:
+    - "total_migration_days": <int>
+    - "weighted_critical_path_sum": <int>
+    - "total_nodes": 40
+
+success_criteria:
+  - result.json is correct and deterministic.
+  - Implicit rules and resource caps are strictly followed.

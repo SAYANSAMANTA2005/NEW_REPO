@@ -1,0 +1,12 @@
+network_map/
+metadata.json
+node_configs.json
+result.json
+.ruff_cache/
+.pytest_cache/
+Hard_Task_Submission.zip
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.ipynb_checkpoints/
